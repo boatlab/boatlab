@@ -17,10 +17,10 @@ eq2n = (w_2^4 * a_2n^2 * T_s^2) + (a_2n^2 * w_2^2) == K_s^2;
 
 [a,b] = solve(eq1,eq2);
 [c,d] = solve(eq1n,eq2n);
-K = double(a(2))
-T = double(b(3))
-K_n = double(c(2))
-T_n = double(d(3))
+K = double(a(2));
+T = double(b(3));
+K_n = double(c(2));
+T_n = double(d(3));
 
 %% Transfer functions
 num = [K/T];
@@ -44,7 +44,7 @@ hold on;
 step(h,simTime,'b');
 title('Step response - Parameters without noise');
 plot(y.time,y.data,'r');
-legend('Estimated','ship.model')
+legend('Estimated','Ship model')
 hold off;
 
 
@@ -53,19 +53,41 @@ hold on;
 step(h_n,simTime,'b');
 title('Step response - Parameters with noise');
 plot(y.time,y.data,'r');
-legend('Estimated with noise','ship.model')
+legend('Estimated with noise','Ship model')
 hold off;
 
 %%
 %%5.2 Wave Spectrum
-[pxx, f] = pwelch( psi_w(2,:), 4096, 10);
+[pxx, f] = pwelch( psi_w(2,:), 4096, 10, 20000);
 %Scaling to rads
 pxx = pxx .* 1/(2*pi);
-f = f .* (2*pi);
+rad_s = f .*(2*pi);
+
+plot_length = length(rad_s)/15;
 
 %Plot spectrum
+hold off;
 figure(11)
-plot(f(1:125),pxx(1:125))
-legend('Estimate for Power Spectral Density Function for Psi_waves')
+plot(rad_s(1:plot_length),pxx(1:plot_length))
+legend('Estimate for Power Spectral Density Function for Psi_{waves}');
+hold on;
+%% Curve fitting
 
+% w_0 read from plot
+w_0 = 0.4895;
+sigma = sqrt(9.652);
 
+psiPSD = @(lambda,data)( 2*lambda*w_0*sigma * ( data ./ (sqrt( (w_0^2 - (data.^2)).^2 + ((2*lambda*w_0).*data).^2) ) ) ).^2;
+
+lambda_fit = lsqcurvefit(psiPSD,0,rad_s,pxx);
+
+K_w = 2*lambda_fit*w_0*sigma;
+
+analytic_psi = psiPSD(lambda_fit,rad_s);
+
+plot(rad_s(1:plot_length),analytic_psi(1:plot_length));
+title('PSD Spectrums')
+legend('Simulated PSD Spectrum','Analytic PSD Spectrum')
+xlabel('Radians per second')
+ylabel('Deg^2 per radian')
+hold off;

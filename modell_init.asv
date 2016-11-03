@@ -24,11 +24,13 @@ T_n = double(d(3));
 
 %% Transfer functions
 num = [K/T];
-den = [1,1/T,0]
+den = [1,1/T,0];
+%without noise
 h = tf(num,den);
 
 num = [K_n/T_n];
-den = [1,1/T_n,0]
+den = [1,1/T_n,0];
+%with noise
 h_n = tf(num,den);
 
 %% Simulation and plotting of step response
@@ -39,24 +41,52 @@ sim('ship',simTime); % !!! simulink model must contain step block
 
 figure(1);
 hold on;
-step(h,simTime);
+step(h,simTime,'b');
 title('Step response - Parameters without noise');
 plot(y.time,y.data,'r');
-legend('Estimated','ship.model')
-hold ofF;
+legend('Estimated','Ship model')
+hold off;
 
 
 figure(2);
 hold on;
-step(h_n,simTime);
+step(h_n,simTime,'b');
 title('Step response - Parameters with noise');
 plot(y.time,y.data,'r');
-legend('Estimated with noise','ship.model')
+legend('Estimated with noise','Ship model')
 hold off;
 
 %%
+%%5.2 Wave Spectrum
+[pxx, f] = pwelch( psi_w(2,:), 4096, 10, 20000);
+%Scaling to rads
+pxx = pxx .* 1/(2*pi);
+rad_s = f .*(2*pi);
 
+plot_length = length(rad_s)/15;
 
-lambda = 0;
-w0=0;
-Kw = 0;
+%Plot spectrum
+hold off;
+figure(11)
+plot(rad_s(1:plot_length),pxx(1:plot_length))
+legend('Estimate for Power Spectral Density Function for Psi_{waves}');
+hold on;
+%% Curve fitting
+
+% w_0 read from plot
+w_0 = 0.4895;
+sigma = sqrt(9.652);
+
+psiPSD = @(lambda,data)( 2*lambda*w_0*sigma * ( data ./ (sqrt( (w_0^2 - (data.^2)).^2 + ((2*lambda*w_0).*data).^2) ) ) ).^2;
+
+lambda_fit = lsqcurvefit(psiPSD,0,rad_s,pxx);
+
+K_w = 2*lambda_fit*w_0*sigma;
+
+analytic_psi = psiPSD(lambda_fit,rad_s);
+
+plot(rad_s(1:plot_length),analytic_psi(1:plot_length));
+title('PSD Spectrums')
+legend('Simulated PSD Spectrum','Analytic PSD Spectrum')
+xlabel('Radians per second')
+hold off;
