@@ -17,18 +17,20 @@ eq2n = (w_2^4 * a_2n^2 * T_s^2) + (a_2n^2 * w_2^2) == K_s^2;
 
 [a,b] = solve(eq1,eq2);
 [c,d] = solve(eq1n,eq2n);
-K = double(a(2));
-T = double(b(3));
-K_n = double(c(2));
-T_n = double(d(3));
+K = double(a(2))
+T = double(b(3))
+K_n = double(c(2))
+T_n = double(d(3))
 
 %% Transfer functions
 num = [K/T];
-den = [1,1/T,0]
+den = [1,1/T,0];
+%without noise
 h = tf(num,den);
 
 num = [K_n/T_n];
-den = [1,1/T_n,0]
+den = [1,1/T_n,0];
+%with noise
 h_n = tf(num,den);
 
 %% Simulation and plotting of step response
@@ -55,8 +57,15 @@ legend('Estimated with noise','ship.model')
 hold off;
 
 %%
+%%5.2 Wave Spectrum
+[pxx, f] = pwelch( psi_w(2,:), 4096, 10);
+%Scaling to rads
+pxx = pxx .* 1/(2*pi);
+f = f .* (2*pi);
+
+%Plot spectrum
+figure(11)
+plot(f(1:125),pxx(1:125))
+legend('Estimate for Power Spectral Density Function for Psi_waves')
 
 
-lambda = 0;
-w0=0;
-Kw = 0;
