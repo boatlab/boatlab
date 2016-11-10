@@ -95,9 +95,9 @@ hold off;
 %
 %% 5.3 Controller Design
 
-T_f = 1;
+T_f = 6;
 T_d = T;
-K_pd = 5;
+K_pd = 0.5612;
 
 
 t_pd = [K_pd*K];
@@ -107,4 +107,9 @@ h_pd = tf(t_pd, n_pd);
 
 h_0 = h + h_pd;
 
+% Check margins of open loop system
+[gain_margin, phase_margin] = margin(h_0);
 margin(h_0);
+title_str = sprintf('Bode plot with margins of Open Loop system\n Gain margin: %f, Phase margin: %f, Wc = 0.1', gain_margin, phase_margin);
+title(title_str);
+
