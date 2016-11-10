@@ -1,3 +1,5 @@
+%{
+
 %% K and T
 T_s = sym('T');
 K_s = sym('K');
@@ -36,14 +38,14 @@ h_n = tf(num,den);
 %% Simulation and plotting of step response
 simTime = 50;
 
-sim('ship',simTime); % !!! simulink model must contain step block
+sim('ship_step',simTime); % !!! simulink model must contain step block
 
 
 figure(1);
 hold on;
 step(h,simTime,'b');
 title('Step response - Parameters without noise');
-plot(y.time,y.data,'r');
+plot(compass.time,compass.data,'r');
 legend('Estimated','Ship model')
 hold off;
 
@@ -52,7 +54,7 @@ figure(2);
 hold on;
 step(h_n,simTime,'b');
 title('Step response - Parameters with noise');
-plot(y.time,y.data,'r');
+plot(compass.time,compass.data,'r');
 legend('Estimated with noise','Ship model')
 hold off;
 
@@ -91,25 +93,56 @@ legend('Simulated PSD Spectrum','Analytic PSD Spectrum')
 xlabel('Radians per second')
 ylabel('Deg^2 per radian')
 hold off;
-
+%}
 %
 %% 5.3 Controller Design
 
-T_f = 6;
+%Find parameters for PD-regulator
+w_c = 0.1;
+T_f = 1/(tan(-130*pi/180)*W_c);
 T_d = T;
-K_pd = 0.5612;
+K_pd = sqrt(W_c^4 * T_f^2 + W_c^2)/K;
 
 
-t_pd = [K_pd*K];
-n_pd = [T_f 1 0];
+t_pd = [K_pd*T_d K_pd];
+n_pd = [T_f 1];
 
 h_pd = tf(t_pd, n_pd);
 
-h_0 = h + h_pd;
+h_0 = h * h_pd;
 
 % Check margins of open loop system
 [gain_margin, phase_margin] = margin(h_0);
+figure(20);
 margin(h_0);
 title_str = sprintf('Bode plot with margins of Open Loop system\n Gain margin: %f, Phase margin: %f, Wc = 0.1', gain_margin, phase_margin);
 title(title_str);
+
+[h_pd_n, h_pd_d] = tfdata(h_pd);
+w_r = 30;
+
+sim_time = 500;
+sim('ship', sim_time);
+
+ref_line = w_r* ones(1,length(compass.time));
+
+figure(21);
+hold off;
+plot(compass.time, compass.data);
+hold on;
+plot(compass.time, ref_line);
+grid on;
+hold off;
+str_title = sprintf('Plot of compass response with PD-regulator\n Noise on');
+title(str_title);
+xlabel('Time in seconds');
+ylabel('Compass degrees');
+
+figure(22);
+plot(rudder.time, rudder.data);
+grid on;
+str_title = sprintf('Plot of rudder response with PD-regulator\n Noise on');
+title(str_title);
+xlabel('Time in seconds');
+ylabel('Rudder degrees');
 
