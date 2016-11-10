@@ -91,3 +91,20 @@ legend('Simulated PSD Spectrum','Analytic PSD Spectrum')
 xlabel('Radians per second')
 ylabel('Deg^2 per radian')
 hold off;
+
+%
+%% 5.3 Controller Design
+
+T_f = 1;
+T_d = T;
+K_pd = 5;
+
+
+t_pd = [K_pd*K];
+n_pd = [T_f 1 0];
+
+h_pd = tf(t_pd, n_pd);
+
+h_0 = h + h_pd;
+
+margin(h_0);
