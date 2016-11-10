@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.57"
+    ComputedModelVersion    "1.53"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -77,9 +77,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "magho"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Nov 10 23:56:54 2016"
-  RTWModifiedTimeStamp	  400723013
-  ModelVersionFormat	  "1.%<AutoIncrement:57>"
+  LastModifiedDate	  "Thu Nov 10 23:40:14 2016"
+  RTWModifiedTimeStamp	  400722632
+  ModelVersionFormat	  "1.%<AutoIncrement:53>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -991,7 +991,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "81"
+    SIDHighWatermark	    "73"
     Block {
       BlockType		      SubSystem
       Name		      "Cargo ship"
@@ -1537,7 +1537,7 @@ Model {
       Name		      "Demux"
       SID		      "60"
       Ports		      [1, 3]
-      Position		      [310, 311, 315, 349]
+      Position		      [365, 311, 370, 349]
       ZOrder		      27
       BlockMirror	      on
       NamePlacement	      "alternate"
@@ -1614,7 +1614,7 @@ Model {
       Position		      [855, 144, 885, 176]
       ZOrder		      -3
       Floating		      off
-      Location		      [113, 170, 437, 409]
+      Location		      [613, 487, 937, 726]
       Open		      on
       NumInputPorts	      "1"
       ZoomMode		      "yonly"
@@ -1645,7 +1645,7 @@ Model {
       Position		      [45, 414, 75, 446]
       ZOrder		      35
       Floating		      off
-      Location		      [439, 735, 763, 974]
+      Location		      [9, 56, 953, 1191]
       Open		      on
       NumInputPorts	      "1"
       ZoomMode		      "yonly"
@@ -1677,7 +1677,7 @@ Model {
       Position		      [310, 414, 340, 446]
       ZOrder		      37
       Floating		      off
-      Location		      [53, 882, 377, 1121]
+      Location		      [969, 56, 1913, 1191]
       Open		      on
       NumInputPorts	      "1"
       List {
@@ -1708,7 +1708,7 @@ Model {
       Position		      [195, 414, 225, 446]
       ZOrder		      39
       Floating		      off
-      Location		      [456, 178, 780, 417]
+      Location		      [602, 192, 926, 431]
       Open		      on
       NumInputPorts	      "1"
       ZoomMode		      "yonly"
@@ -1731,160 +1731,6 @@ Model {
       SaveName		      "ScopeData3"
       DataFormat	      "StructureWithTime"
       SampleTime	      "0"
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "Subsystem1"
-      SID		      "74"
-      Ports		      [1, 1]
-      Position		      [565, 310, 605, 350]
-      ZOrder		      41
-      BlockMirror	      on
-      BackgroundColor	      "cyan"
-      NamePlacement	      "alternate"
-      ShowName		      off
-      RequestExecContextInheritance off
-      Object {
-	$PropName		"MaskObject"
-	$ObjectID		27
-	$ClassName		"Simulink.Mask"
-	Type			"degrees to radians"
-	Description		"Converts degrees to radians"
-	Display			"fprintf('D2R');"
-      }
-      System {
-	Name			"Subsystem1"
-	Location		[539, 291, 1093, 775]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "In1"
-	  SID			  "75"
-	  Position		  [110, 103, 140, 117]
-	  ZOrder		  -1
-	  ShowName		  off
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "Gain"
-	  SID			  "76"
-	  Position		  [180, 94, 245, 126]
-	  ZOrder		  -2
-	  Gain			  "pi/180"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Out1"
-	  SID			  "77"
-	  Position		  [295, 103, 325, 117]
-	  ZOrder		  -3
-	  ShowName		  off
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  ZOrder		  1
-	  SrcBlock		  "Gain"
-	  SrcPort		  1
-	  DstBlock		  "Out1"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  2
-	  SrcBlock		  "In1"
-	  SrcPort		  1
-	  DstBlock		  "Gain"
-	  DstPort		  1
-	}
-      }
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "Subsystem2"
-      SID		      "78"
-      Ports		      [1, 1]
-      Position		      [345, 306, 380, 354]
-      ZOrder		      42
-      BlockMirror	      on
-      BackgroundColor	      "cyan"
-      NamePlacement	      "alternate"
-      ShowName		      off
-      RequestExecContextInheritance off
-      Object {
-	$PropName		"MaskObject"
-	$ObjectID		28
-	$ClassName		"Simulink.Mask"
-	Type			"radians to degrees"
-	Description		"Converts radians to degrees"
-	Display			"fprintf('R2D');"
-      }
-      System {
-	Name			"Subsystem2"
-	Location		[419, 270, 973, 754]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "In1"
-	  SID			  "79"
-	  Position		  [110, 103, 140, 117]
-	  ZOrder		  -1
-	  ShowName		  off
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "Gain"
-	  SID			  "80"
-	  Position		  [180, 94, 245, 126]
-	  ZOrder		  -2
-	  Gain			  "180/pi"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Out1"
-	  SID			  "81"
-	  Position		  [295, 103, 325, 117]
-	  ZOrder		  -3
-	  ShowName		  off
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  ZOrder		  1
-	  SrcBlock		  "Gain"
-	  SrcPort		  1
-	  DstBlock		  "Out1"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  2
-	  SrcBlock		  "In1"
-	  SrcPort		  1
-	  DstBlock		  "Gain"
-	  DstPort		  1
-	}
-      }
     }
     Block {
       BlockType		      Sum
@@ -2080,14 +1926,14 @@ Model {
       ZOrder		      78
       SrcBlock		      "Memory"
       SrcPort		      1
-      DstBlock		      "Subsystem2"
+      DstBlock		      "Demux"
       DstPort		      1
     }
     Line {
       ZOrder		      83
       SrcBlock		      "Demux"
       SrcPort		      1
-      Points		      [-286, 0; 0, 110]
+      Points		      [-341, 0; 0, 110]
       Branch {
 	ZOrder			102
 	Points			[0, 55]
@@ -2104,7 +1950,7 @@ Model {
       ZOrder		      88
       SrcBlock		      "Demux"
       SrcPort		      2
-      Points		      [-80, 0]
+      Points		      [-135, 0]
       Branch {
 	ZOrder			97
 	Points			[-65, 0; 0, 100]
@@ -2130,7 +1976,7 @@ Model {
       ZOrder		      92
       SrcBlock		      "Demux"
       SrcPort		      3
-      Points		      [-29, 0; 0, 90]
+      Points		      [-84, 0; 0, 90]
       Branch {
 	ZOrder			95
 	Points			[0, 55]
@@ -2154,25 +2000,7 @@ Model {
       ZOrder		      121
       SrcBlock		      "Mux"
       SrcPort		      1
-      DstBlock		      "Subsystem1"
-      DstPort		      1
-    }
-    Line {
-      ZOrder		      130
-      SrcBlock		      "Subsystem1"
-      SrcPort		      1
       DstBlock		      "S-Function"
-      DstPort		      1
-    }
-    Line {
-      FontName		      "Helvetica"
-      FontSize		      9
-      FontWeight	      "normal"
-      FontAngle		      "normal"
-      ZOrder		      132
-      SrcBlock		      "Subsystem2"
-      SrcPort		      1
-      DstBlock		      "Demux"
       DstPort		      1
     }
   }

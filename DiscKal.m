@@ -73,7 +73,7 @@ K_w = 0.1999;
 % Contiuous model
 A_cont = [ 
 0,           1,                       0,   0,       0;
--w_0*w_0,    -2*lambda*w_0*w_0,   0,   0,       0;
+-w_0*w_0,    -2*lambda*w_0,   0,   0,       0;
 0,           0,                       0,   1,       0;
 0,           0,                       0,   -1/T,    -K/T;
 0,           0,                       0,   0,       0
@@ -95,7 +95,7 @@ E_cont = [
     0, 0;
     0, 0;
     0, 1
-]
+];
 
 %Process noise covariance matrix
 Q_cont = [30, 0; 0, 10^-6];
