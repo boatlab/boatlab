@@ -1,4 +1,4 @@
-%{
+
 
 %% K and T
 T_s = sym('T');
@@ -93,12 +93,12 @@ legend('Simulated PSD Spectrum','Analytic PSD Spectrum')
 xlabel('Radians per second')
 ylabel('Deg^2 per radian')
 hold off;
-%}
+
 %
 %% 5.3 Controller Design
 
 %Find parameters for PD-regulator
-w_c = 0.1;
+W_c = 0.1;
 T_f = 1/(tan(-130*pi/180)*W_c);
 T_d = T;
 K_pd = sqrt(W_c^4 * T_f^2 + W_c^2)/K;
@@ -122,7 +122,7 @@ title(title_str);
 w_r = 30;
 
 sim_time = 500;
-sim('ship', sim_time);
+sim('ship_pd', sim_time);
 
 ref_line = w_r* ones(1,length(compass.time));
 

@@ -97,9 +97,12 @@ E_cont = [
 %Time step 10 Hz
 T = 0.1;
 
-A = e^(A_cont*T);
+% Using Van Loan's method to derive A, B and Q
+AQ_exponent = [A, E*Q_w*transp(E); 0, -transp(A)];
+AQ = e^(AQ_exponent * T);
 
-B = 7;
+AB_exponent = [A, B; 0, 0];
+AB = e^(AB_exponent * T);
 
 
 
