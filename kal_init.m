@@ -1,4 +1,4 @@
-%% Some constant from previous tasks
+% A few constants from previous tasks
 T_sample = 0.1;
 w_0 = 0.4895;
 lambda = 0.0657;
@@ -6,7 +6,7 @@ K = 0.1744;
 T = 87.1542;
 K_w = 0.1999;
 
-%% Contiuous model
+%% Continuous system matrixes
 A_cont = [ 
 0,           1,                       0,   0,       0;
 -w_0*w_0,    -2*lambda*w_0,   0,   0,       0;
@@ -33,12 +33,11 @@ E_cont = [
     0, 1
 ];
 
-%Process noise covariance matrix
+% Process noise covariance matrix
 Q_cont = [30, 0; 0, 10^-6];
 
 %% Exact discrete model
-
-% Using Van Loan's method to derive A, B and Q
+% Using Van Loan's method to derive the discrete versions of A, B and Q
 AQ_exponent = [A_cont, E_cont*Q_cont*transp(E_cont);
     zeros(5,5), -transp(A_cont)];
 
@@ -54,8 +53,9 @@ Q = AQ(1:5,6:10)*transp(AQ(1:5,1:5));
 % C is the same as in continuous model
 C = C_cont;
 
-% R_cont was found using var() on the output from model with zero input.
+% R_cont was found using var() on the output from the cargo ship model with zero input.
 R_cont = 6.079e-07;
+
 % R is averaged R_cont
 R = R_cont/T_sample;
 
@@ -81,7 +81,7 @@ data = struct(  ...
     'xh0', xh0 );
 
 
-%% Simulation with estimated Psi as measurement
+%% Run simulation with estimated Psi as measurement
 simtime = 600;
 sim('ship', simtime);
 
@@ -120,4 +120,3 @@ xlabel('Time [seconds]');
 ylabel('Rudder angle [degrees]');
 legend('Rudder angle','Estimated bias');
 grid on;
-
