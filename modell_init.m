@@ -1,5 +1,3 @@
-
-
 %% K and T
 T_s = sym('T');
 K_s = sym('K');
@@ -40,7 +38,6 @@ simTime = 50;
 
 sim('ship_step',simTime); % !!! simulink model must contain step block
 
-
 figure(1);
 hold on;
 step(h,simTime,'b');
@@ -48,7 +45,6 @@ title('Step response - Parameters without noise');
 plot(compass.time,compass.data,'r');
 legend('Estimated','Ship model')
 hold off;
-
 
 figure(2);
 hold on;
@@ -94,7 +90,6 @@ xlabel('Radians per second')
 ylabel('Deg^2 per radian')
 hold off;
 
-%
 %% 5.3 Controller Design
 
 %Find parameters for PD-regulator
@@ -102,13 +97,9 @@ W_c = 0.1;
 T_f = 1/(tan(-130*pi/180)*W_c);
 T_d = T;
 K_pd = sqrt(W_c^4 * T_f^2 + W_c^2)/K;
-
-
 t_pd = [K_pd*T_d K_pd];
 n_pd = [T_f 1];
-
 h_pd = tf(t_pd, n_pd);
-
 h_0 = h * h_pd;
 
 % Check margins of open loop system
