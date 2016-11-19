@@ -108,7 +108,8 @@ h_0 = h * h_pd;
 [gain_margin, phase_margin] = margin(h_0);
 figure(20);
 margin(h_0);
-title_str = sprintf('Bode plot with margins of Open Loop system\n Gain margin: %f, Phase margin: %f, Wc = 0.1', gain_margin, phase_margin);
+title_str = sprintf('Bode plot with margins of Open Loop system\n Gain margin:' ...
+' %f, Phase margin: %f, Wc = 0.1', gain_margin, phase_margin);
 title(title_str);
 
 [h_pd_n, h_pd_d] = tfdata(h_pd);
