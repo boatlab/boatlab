@@ -87,13 +87,10 @@ L = Pm*(data.C)'*inv(data.C*Pm*(data.C)'+data.R);
 %(2) Update estimate
 x(6:10) = x(1:5) + L*(u(2)-(data.C*x(1:5)));
 %(3) Update covariance
-%P = (eye(5)-L*C)*Pm*(eye(5)-L*C)' + L*R*L';
 P = (eye(5)- (L*data.C))*Pm;
-x(11:35) = P(:)';
 
 %(4) Project ahead
 x(1:5) = data.A*x(6:10) + data.B*u(1);
-P = reshape(x(11:35), sqrt(length(x(11:35))), sqrt(length(x(11:35))));
 Pm = data.A*P*(data.A)' + data.Q;
 x(11:35) = Pm(:)';
 sys=x;

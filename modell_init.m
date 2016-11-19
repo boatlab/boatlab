@@ -1,6 +1,6 @@
 
 
-%% K and T
+%% Deriving K and T
 T_s = sym('T');
 K_s = sym('K');
 
@@ -24,7 +24,7 @@ T = double(b(3));
 K_n = double(c(2));
 T_n = double(d(3));
 
-%% Transfer functions
+%% Transfer functions with and without noise
 num = [K/T];
 den = [1,1/T,0];
 %without noise
@@ -40,7 +40,6 @@ simTime = 50;
 
 sim('ship_step',simTime); % !!! simulink model must contain step block
 
-
 figure(1);
 hold on;
 step(h,simTime,'b');
@@ -48,7 +47,6 @@ title('Step response - Parameters without noise');
 plot(compass.time,compass.data,'r');
 legend('Estimated','Ship model')
 hold off;
-
 
 figure(2);
 hold on;
@@ -58,8 +56,8 @@ plot(compass.time,compass.data,'r');
 legend('Estimated with noise','Ship model')
 hold off;
 
-%%
-%%5.2 Wave Spectrum
+
+%% 5.2 Wave Spectrum
 [pxx, f] = pwelch( psi_w(2,:), 4096, 10, 20000);
 %Scaling to rads
 pxx = pxx .* 1/(2*pi);
@@ -73,8 +71,8 @@ figure(11)
 plot(rad_s(1:plot_length),pxx(1:plot_length))
 legend('Estimate for Power Spectral Density Function for Psi_{waves}');
 hold on;
-%% Curve fitting
 
+%% Curve fitting
 % w_0 read from plot
 w_0 = 0.4895;
 sigma = sqrt(9.652);
@@ -94,16 +92,14 @@ xlabel('Radians per second')
 ylabel('Deg^2 per radian')
 hold off;
 
-%
 %% 5.3 Controller Design
-
-%Find parameters for PD-regulator
+%Calculate parameters for PD-regulator
 W_c = 0.1;
 T_f = 1/(tan(-130*pi/180)*W_c);
 T_d = T;
 K_pd = sqrt(W_c^4 * T_f^2 + W_c^2)/K;
 
-
+% Setup regulator transfer function
 t_pd = [K_pd*T_d K_pd];
 n_pd = [T_f 1];
 
@@ -121,11 +117,13 @@ title(title_str);
 [h_pd_n, h_pd_d] = tfdata(h_pd);
 w_r = 30;
 
+%% Simulate with step in reference
 sim_time = 500;
 sim('ship_pd', sim_time);
 
 ref_line = w_r* ones(1,length(compass.time));
 
+%Plot responses
 figure(21);
 hold off;
 plot(compass.time, compass.data);
@@ -145,6 +143,3 @@ str_title = sprintf('Plot of rudder response with PD-regulator\n Noise on');
 title(str_title);
 xlabel('Time in seconds');
 ylabel('Rudder degrees');
-
-%% Kalman filter
-T_sample = 0.1;
