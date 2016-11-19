@@ -2,7 +2,7 @@ function [sys,x0,str,ts] = DiscKal(t,x,u,flag,data)
 % Shell for the discrete kalman filter assignment in
 % TTK4115 Linear Systems.
 %
-% Author: Jørgen Spjøtvold
+% Author: JÃ¸rgen SpjÃ¸tvold
 % 19/10-2003 
 
 switch flag,
@@ -36,15 +36,12 @@ switch flag,
   %%%%%%%%%%%%%%%%%%%%
   otherwise
     error(['Unhandled flag = ',num2str(flag)]);
-
 end
 
 function [sys,x0,str,ts]=mdlInitializeSizes(data)
 % This is called only at the start of the simulation. 
 
 sizes = simsizes; % do not modify
-
-
 
 sizes.NumContStates  = 0; % Number of continuous states in the system, do not modify
 sizes.NumDiscStates  = 35; % Number of discrete states in the system, modify. 
@@ -65,9 +62,7 @@ ts  = [T_sample 0]; % Sample time. [-1 0] means that sampling is
 % inherited from the driving block and that it changes during
 % minor steps.
 
-
 x0 = [data.xm0 data.xh0 data.Pm0(:)']; % Initial values for the discrete states, modify
-
 
 function sys=mdlUpdate(t,x,u,data)%mdlUpdate(t,x,u, data); if method 2 is used
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -76,10 +71,8 @@ function sys=mdlUpdate(t,x,u,data)%mdlUpdate(t,x,u, data); if method 2 is used
 % the update equals the previous state vector + input nr one.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 Pm_vec = x(11:35);
 Pm = reshape(Pm_vec,sqrt(length(Pm_vec)),sqrt(length(Pm_vec)));
-
 
 %% Kalman filter update
 %(1) Kalman gain
@@ -97,9 +90,6 @@ P = reshape(x(11:35), sqrt(length(x(11:35))), sqrt(length(x(11:35))));
 Pm = data.A*P*(data.A)' + data.Q;
 x(11:35) = Pm(:)';
 sys=x;
-
-
-
       
 function sys=mdlOutputs(t,x,u,data)% mdlOutputs(t,x,u,data) if mathod 2 is used
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,5 +101,3 @@ sys=[x(10) x(8) x(7)];
 
 function sys=mdlTerminate(t,x,u) 
 sys = [];
-
-
