@@ -1,5 +1,3 @@
-
-
 T_sample = 0.1;
 w_0 = 0.4895;
 lambda = 0.0657;
@@ -77,3 +75,52 @@ data = struct(  ...
     'Pm0', Pm0, ...
     'xm0', xm0,  ...
     'xh0', xh0 );
+
+simtime = 600;
+
+timeline = 0:0.1:simtime;
+compass_reference = 30;
+referenceline = ones(length(timeline)) * compass_reference;
+
+sim('ship', simtime);
+
+figure(50);
+
+subplot(2,1,1);
+grid on;
+plot(timeline,referenceline, 'b', compass.time,compass.data, 'r', psi_est.time,psi_est.data, 'c');
+title('Compass heading');
+xlabel('Time [seconds]');
+ylabel('Compass [degrees]');
+legend('Reference heading','Actual compass heading', 'Estimated compass heading without waves');
+
+%{
+subplot(2,1,2);
+grid on;
+plot(timeline, waveline);
+hold on;
+plot(psi_w_est.time,psi_w_est.data);
+hold off;
+title('Wave influence on compass heading');
+xaxis('Time [seconds]');
+yaxis('Wave influence [degrees]');
+legendNames = ['Actual wave influence', 'Estimated wave influence'];
+legend(legendNames);
+%}
+
+subplot(2,1,2);     
+grid on;
+plot(rudder.time,rudder.data);
+hold on;
+plot(bias_est.time,bias_est.data);
+plot(rudder_forward.time,rudder_forward.data);
+
+title('');
+xlabel('Time [seconds]');
+ylabel('Rudder angle [degrees]');
+legend('Rudder angle before feed forward','Estimated bias','Rudder angle after feed forward');
+
+
+
+
+

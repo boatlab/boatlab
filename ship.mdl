@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.64"
+    ComputedModelVersion    "1.76"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -55,8 +55,8 @@ Model {
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
 	  Extents		  [1287.0, 1203.0]
-	  ZoomFactor		  [1.0]
-	  Offset		  [-61.633370219758525, 70.207890277645348]
+	  ZoomFactor		  [0.8]
+	  Offset		  [-81.665974987910346, -41.318821984070333]
 	}
 	Object {
 	  $ObjectID		  6
@@ -77,9 +77,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Magne"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Nov 19 19:22:59 2016"
-  RTWModifiedTimeStamp	  401482315
-  ModelVersionFormat	  "1.%<AutoIncrement:64>"
+  LastModifiedDate	  "Sat Nov 19 20:34:31 2016"
+  RTWModifiedTimeStamp	  401488081
+  ModelVersionFormat	  "1.%<AutoIncrement:76>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -982,9 +982,9 @@ Model {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "100"
+    ZoomFactor		    "80"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "86"
+    SIDHighWatermark	    "91"
     Block {
       BlockType		      SubSystem
       Name		      "Cargo ship"
@@ -1018,14 +1018,14 @@ Model {
 	    Type		    "checkbox"
 	    Name		    "current"
 	    Prompt		    "current"
-	    Value		    "off"
+	    Value		    "on"
 	  }
 	  Object {
 	    $ObjectID		    24
 	    Type		    "checkbox"
 	    Name		    "logic"
 	    Prompt		    "waves"
-	    Value		    "on"
+	    Value		    "off"
 	  }
 	  PropName		  "Parameters"
 	}
@@ -1553,6 +1553,13 @@ Model {
       NamePlacement	      "alternate"
     }
     Block {
+      BlockType		      Memory
+      Name		      "Memory2"
+      SID		      "91"
+      Position		      [555, 195, 585, 225]
+      ZOrder		      52
+    }
+    Block {
       BlockType		      Mux
       Name		      "Mux"
       SID		      "59"
@@ -1587,8 +1594,8 @@ Model {
       Name		      "Rudder saturation"
       SID		      "48"
       Ports		      [1, 1]
-      Position		      [475, 195, 505, 225]
-      ZOrder		      22
+      Position		      [345, 195, 375, 225]
+      ZOrder		      53
       InputPortMap	      "u0"
       UpperLimit	      "45"
       LowerLimit	      "-45"
@@ -1768,11 +1775,25 @@ Model {
       Name		      "Sum"
       SID		      "45"
       Ports		      [2, 1]
-      Position		      [215, 200, 235, 220]
+      Position		      [150, 200, 170, 220]
       ZOrder		      18
       ShowName		      off
       IconShape		      "round"
-      Inputs		      "|+-"
+      Inputs		      "-+|"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum1"
+      SID		      "88"
+      Ports		      [2, 1]
+      Position		      [450, 200, 470, 220]
+      ZOrder		      49
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|++"
       InputSameDT	      off
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1796,9 +1817,9 @@ Model {
       Name		      "To Workspace1"
       SID		      "47"
       Ports		      [1]
-      Position		      [580, 95, 640, 125]
+      Position		      [570, 95, 645, 125]
       ZOrder		      20
-      VariableName	      "rudder"
+      VariableName	      "rudder_forward"
       MaxDataPoints	      "inf"
       SaveFormat	      "Timeseries"
       Save2DSignal	      "3-D array (concatenate along third dimension)"
@@ -1812,7 +1833,7 @@ Model {
       Ports		      [1]
       Position		      [-35, 565, 25, 595]
       ZOrder		      34
-      VariableName	      "bias"
+      VariableName	      "bias_est"
       MaxDataPoints	      "inf"
       SaveFormat	      "Timeseries"
       Save2DSignal	      "3-D array (concatenate along third dimension)"
@@ -1826,7 +1847,7 @@ Model {
       Ports		      [1]
       Position		      [190, 565, 250, 595]
       ZOrder		      36
-      VariableName	      "psi_w"
+      VariableName	      "psi_w_est"
       MaxDataPoints	      "inf"
       SaveFormat	      "Timeseries"
       Save2DSignal	      "3-D array (concatenate along third dimension)"
@@ -1840,7 +1861,21 @@ Model {
       Ports		      [1]
       Position		      [75, 565, 135, 595]
       ZOrder		      38
-      VariableName	      "psi"
+      VariableName	      "psi_est"
+      MaxDataPoints	      "inf"
+      SaveFormat	      "Timeseries"
+      Save2DSignal	      "3-D array (concatenate along third dimension)"
+      FixptAsFi		      on
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace5"
+      SID		      "89"
+      Ports		      [1]
+      Position		      [450, 95, 510, 125]
+      ZOrder		      50
+      VariableName	      "rudder"
       MaxDataPoints	      "inf"
       SaveFormat	      "Timeseries"
       Save2DSignal	      "3-D array (concatenate along third dimension)"
@@ -1917,7 +1952,7 @@ Model {
       BlockType		      TransferFcn
       Name		      "h_pd"
       SID		      "40"
-      Position		      [320, 192, 380, 228]
+      Position		      [210, 192, 270, 228]
       ZOrder		      9
       Numerator		      "h_pd_n{1,1}"
       Denominator	      "h_pd_d{1,1}"
@@ -1966,22 +2001,22 @@ Model {
       "ources','WiredSimulink',true,'DataLoggingVariableName','ScopeData5','DataLoggingSaveFormat','StructureWithTime',"
       "'DataLoggingLimitDataPoints',true,'DataLoggingDecimation','1','DataLoggingDecimateData',true,'DataLoggingMaxPoin"
       "ts','5000000'),extmgr.Configuration('Visuals','Time Domain',true,'SerializedDisplays',{struct('MinYLimReal','-4."
-      "25503','MaxYLimReal','32.21493','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','32.21493','LegendVisibility"
+      "63171','MaxYLimReal','35.60506','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','35.60506','LegendVisibility"
       "','Off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0."
       "686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.623529411764706 1;1"
       " 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.717647058823529 0.2"
       "74509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<SignalLabel>','LinePr"
       "opertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',3,'LineNames',{{'Subsystem2:1','Subsystem2:2','Sub"
-      "system2:3'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-4.25503','MaxYL"
-      "imReal','32.21493','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','32.21493','LegendVisibility','Off','XGri"
+      "system2:3'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-4.63171','MaxYL"
+      "imReal','35.60506','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','35.60506','LegendVisibility','Off','XGri"
       "d',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.6862745098039"
       "22 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.623529411764706 1;1 0.4117647058"
       "82353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.717647058823529 0.27450980392156"
       "9 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<SignalLabel>','LinePropertiesCache"
       "',{{}},'UserDefinedChannelNames',{{}},'NumLines',0,'LineNames',{{[]}},'ShowContent',true,'Placement',1)),extmgr."
       "Configuration('Tools','Plot Navigation',true,'OnceAtStop',false,'PreviousZoomMode','ZoomY','PreviousAutoscale','"
-      "XY'),extmgr.Configuration('Tools','Measurements',true,'Version','2015b')),'Version','2015b','Location',[354.3333"
-      "33333333 180.333333333333 684.333333333333 812.333333333333],'VisibleAtModelOpen','on')"
+      "XY'),extmgr.Configuration('Tools','Measurements',true,'Version','2015b')),'Version','2015b','Location',[1 71.666"
+      "6666666667 1707.66666666667 959])"
     }
     Block {
       BlockType		      Scope
@@ -2015,7 +2050,7 @@ Model {
       BlockType		      Constant
       Name		      "reference"
       SID		      "44"
-      Position		      [155, 195, 185, 225]
+      Position		      [90, 195, 120, 225]
       ZOrder		      17
       Value		      "30"
     }
@@ -2037,27 +2072,37 @@ Model {
       ZOrder		      3
       SrcBlock		      "Cargo ship"
       SrcPort		      1
-      Points		      [88, 0]
+      Points		      [69, 0]
       Branch {
-	ZOrder			72
-	Points			[0, 190]
-	DstBlock		"Mux"
-	DstPort			2
+	ZOrder			164
+	Points			[19, 0]
+	Branch {
+	  ZOrder		  72
+	  Points		  [0, 190]
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Branch {
+	  ZOrder		  71
+	  Points		  [32, 0; 0, -30]
+	  Branch {
+	    ZOrder		    33
+	    Points		    [0, -50]
+	    DstBlock		    "To Workspace"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    32
+	    DstBlock		    "compass"
+	    DstPort		    1
+	  }
+	}
       }
       Branch {
-	ZOrder			71
-	Points			[32, 0; 0, -30]
-	Branch {
-	  ZOrder		  33
-	  Points		  [0, -50]
-	  DstBlock		  "To Workspace"
-	  DstPort		  1
-	}
-	Branch {
-	  ZOrder		  32
-	  DstBlock		  "compass"
-	  DstPort		  1
-	}
+	ZOrder			163
+	Points			[0, -144; -619, 0]
+	DstBlock		"Sum"
+	DstPort			1
       }
     }
     Line {
@@ -2068,24 +2113,17 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      51
-      SrcBlock		      "h_pd"
-      SrcPort		      1
-      DstBlock		      "Rudder saturation"
-      DstPort		      1
-    }
-    Line {
-      ZOrder		      53
+      ZOrder		      161
       SrcBlock		      "reference"
       SrcPort		      1
       DstBlock		      "Sum"
-      DstPort		      1
+      DstPort		      2
     }
     Line {
-      ZOrder		      54
-      SrcBlock		      "Rudder saturation"
+      ZOrder		      175
+      SrcBlock		      "Sum1"
       SrcPort		      1
-      Points		      [21, 0]
+      Points		      [56, 0]
       Branch {
 	ZOrder			70
 	Points			[0, 69; 242, 0; 0, 81]
@@ -2094,16 +2132,16 @@ Model {
       }
       Branch {
 	ZOrder			69
-	Points			[17, 0]
+	Points			[9, 0]
 	Branch {
-	  ZOrder		  56
-	  Points		  [0, -100]
+	  ZOrder		  169
+	  Points		  [8, 0; 0, -100]
 	  DstBlock		  "To Workspace1"
 	  DstPort		  1
 	}
 	Branch {
-	  ZOrder		  55
-	  DstBlock		  "Cargo ship"
+	  ZOrder		  168
+	  DstBlock		  "Memory2"
 	  DstPort		  1
 	}
       }
@@ -2119,43 +2157,44 @@ Model {
       ZOrder		      83
       SrcBlock		      "Demux"
       SrcPort		      1
-      Points		      [-321, 0; 0, 165]
+      Points		      [-43, 0]
       Branch {
-	ZOrder			102
-	Points			[0, 55]
-	DstBlock		"To Workspace2"
-	DstPort			1
+	ZOrder			154
+	Points			[0, -68; 243, 0]
+	DstBlock		"Sum1"
+	DstPort			2
       }
       Branch {
-	ZOrder			85
-	DstBlock		"bias"
-	DstPort			1
+	ZOrder			153
+	Points			[-278, 0; 0, 165]
+	Branch {
+	  ZOrder		  102
+	  Points		  [0, 55]
+	  DstBlock		  "To Workspace2"
+	  DstPort		  1
+	}
+	Branch {
+	  ZOrder		  85
+	  DstBlock		  "bias"
+	  DstPort		  1
+	}
       }
     }
     Line {
       ZOrder		      88
       SrcBlock		      "Demux"
       SrcPort		      2
-      Points		      [-35, 0]
+      Points		      [-205, 0; 0, 155]
       Branch {
-	ZOrder			144
-	Points			[-170, 0; 0, 155]
-	Branch {
-	  ZOrder		  145
-	  Points		  [-15, 0; 0, 55]
-	  DstBlock		  "To Workspace4"
-	  DstPort		  1
-	}
-	Branch {
-	  ZOrder		  98
-	  DstBlock		  "psi"
-	  DstPort		  1
-	}
+	ZOrder			145
+	Points			[-15, 0; 0, 55]
+	DstBlock		"To Workspace4"
+	DstPort			1
       }
       Branch {
-	ZOrder			137
-	DstBlock		"Sum"
-	DstPort			2
+	ZOrder			98
+	DstBlock		"psi"
+	DstPort			1
       }
     }
     Line {
@@ -2219,6 +2258,37 @@ Model {
       SrcPort		      1
       DstBlock		      "Zero-Order\nHold"
       DstPort		      1
+    }
+    Line {
+      ZOrder		      167
+      SrcBlock		      "Memory2"
+      SrcPort		      1
+      DstBlock		      "Cargo ship"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      170
+      SrcBlock		      "h_pd"
+      SrcPort		      1
+      DstBlock		      "Rudder saturation"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      172
+      SrcBlock		      "Rudder saturation"
+      SrcPort		      1
+      Points		      [38, 0]
+      Branch {
+	ZOrder			174
+	Points			[0, -100]
+	DstBlock		"To Workspace5"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			173
+	DstBlock		"Sum1"
+	DstPort			1
+      }
     }
   }
 }
