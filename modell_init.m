@@ -146,3 +146,5 @@ title(str_title);
 xlabel('Time in seconds');
 ylabel('Rudder degrees');
 
+%% Kalman filter
+T_sample = 0.1;
