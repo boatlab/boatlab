@@ -54,7 +54,6 @@ plot(compass.time,compass.data,'r');
 legend('Estimated with noise','Ship model')
 hold off;
 
-
 %% 5.2 Wave Spectrum
 [pxx, f] = pwelch( psi_w(2,:), 4096, 10, 20000);
 
