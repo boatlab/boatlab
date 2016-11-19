@@ -57,6 +57,7 @@ hold off;
 
 %% 5.2 Wave Spectrum
 [pxx, f] = pwelch( psi_w(2,:), 4096, 10, 20000);
+
 %Scaling to rads
 pxx = pxx .* 1/(2*pi);
 rad_s = f .*(2*pi);
@@ -96,7 +97,6 @@ W_c = 0.1;
 T_f = 1/(tan(-130*pi/180)*W_c);
 T_d = T;
 K_pd = sqrt(W_c^4 * T_f^2 + W_c^2)/K;
-<<<<<<< HEAD
 
 % Setup regulator transfer function
 t_pd = [K_pd*T_d K_pd];
